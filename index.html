@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketchpad - Drawing App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-palette"></i>
+                    Sketchpad
+                </h1>
+                <div class="header-controls">
+                    <button class="btn btn-icon theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Toolbar -->
+            <div class="toolbar" id="toolbar">
+                <!-- Drawing Tools -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">Tools</h3>
+                    <button class="tool-btn active" data-tool="brush" title="Brush">
+                        <i class="fas fa-paint-brush"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="eraser" title="Eraser">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="line" title="Line">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="rectangle" title="Rectangle">
+                        <i class="far fa-square"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="circle" title="Circle">
+                        <i class="far fa-circle"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="triangle" title="Triangle">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="tool-btn" data-tool="text" title="Text">
+                        <i class="fas fa-font"></i>
+                    </button>
+                </div>
+
+                <!-- Colors -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">Color</h3>
+                    <div class="color-section">
+                        <input type="color" id="colorPicker" value="#000000" title="Choose Color">
+                        <div class="color-presets">
+                            <div class="color-preset" data-color="#000000" style="background: #000000;"></div>
+                            <div class="color-preset" data-color="#ff0000" style="background: #ff0000;"></div>
+                            <div class="color-preset" data-color="#00ff00" style="background: #00ff00;"></div>
+                            <div class="color-preset" data-color="#0000ff" style="background: #0000ff;"></div>
+                            <div class="color-preset" data-color="#ffff00" style="background: #ffff00;"></div>
+                            <div class="color-preset" data-color="#ff00ff" style="background: #ff00ff;"></div>
+                            <div class="color-preset" data-color="#00ffff" style="background: #00ffff;"></div>
+                            <div class="color-preset" data-color="#ffffff" style="background: #ffffff; border: 1px solid #ccc;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brush Settings -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">Brush</h3>
+                    <div class="brush-controls">
+                        <label for="brushSize">Size: <span id="brushSizeValue">5</span>px</label>
+                        <input type="range" id="brushSize" min="1" max="50" value="5">
+                        <div class="brush-preview" id="brushPreview"></div>
+                        
+                        <label for="opacity">Opacity: <span id="opacityValue">100</span>%</label>
+                        <input type="range" id="opacity" min="10" max="100" value="100">
+                    </div>
+                </div>
+
+                <!-- Shape Settings -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">Shape Mode</h3>
+                    <div class="shape-mode">
+                        <button class="mode-btn active" data-mode="outline" title="Outline">
+                            <i class="far fa-square"></i>
+                        </button>
+                        <button class="mode-btn" data-mode="fill" title="Fill">
+                            <i class="fas fa-square"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas Controls -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">Canvas</h3>
+                    <div class="canvas-controls">
+                        <button class="btn btn-sm" id="undoBtn" title="Undo">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="btn btn-sm" id="redoBtn" title="Redo">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="btn btn-sm" id="zoomInBtn" title="Zoom In">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button class="btn btn-sm" id="zoomOutBtn" title="Zoom Out">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button class="btn btn-sm" id="resetZoomBtn" title="Reset Zoom">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </button>
+                        <button class="btn btn-sm" id="clearBtn" title="Clear Canvas">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Background -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">Background</h3>
+                    <input type="color" id="backgroundPicker" value="#ffffff" title="Background Color">
+                </div>
+
+                <!-- File Operations -->
+                <div class="tool-group">
+                    <h3 class="tool-group-title">File</h3>
+                    <div class="file-controls">
+                        <input type="file" id="importFile" accept="image/*" style="display: none;">
+                        <button class="btn btn-sm" id="importBtn" title="Import Image">
+                            <i class="fas fa-upload"></i>
+                        </button>
+                        <button class="btn btn-sm" id="saveBtn" title="Save as PNG">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-container" id="canvasContainer">
+                <canvas id="drawingCanvas"></canvas>
+                <div class="canvas-overlay" id="canvasOverlay">
+                    <div class="zoom-indicator" id="zoomIndicator">100%</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Text Input Modal -->
+        <div class="modal" id="textModal" style="display: none;">
+            <div class="modal-content">
+                <h3>Add Text</h3>
+                <input type="text" id="textInput" placeholder="Enter text...">
+                <div class="text-controls">
+                    <label for="fontSize">Size:</label>
+                    <input type="range" id="fontSize" min="12" max="72" value="24">
+                    <span id="fontSizeValue">24px</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn" id="addTextBtn">Add Text</button>
+                    <button class="btn btn-secondary" id="cancelTextBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Toolbar Toggle -->
+        <button class="mobile-toolbar-toggle" id="mobileToolbarToggle">
+            <i class="fas fa-tools"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
